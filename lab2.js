@@ -96,7 +96,7 @@
   function markCompromised() {
     state.compromised = true;
     statusDot.classList.add('compromised');
-    statusText.textContent = 'SANDBOX COMPROMISED';
+    statusText.textContent = 'SYSTEM COMPROMISED';
   }
 
   // ---------- Tabs ----------
@@ -286,7 +286,7 @@
     write('     attacker-controlled MCP endpoint by default.', 'muted');
     write('', 'out');
     write('=========================================================', 'warn');
-    write(' DEMO COMPLETE; Tool Response Poisoning', 'warn');
+    write(' COMPROMISE COMPLETE: Tool Response Poisoning', 'warn');
     write('=========================================================', 'warn');
     write(' Mitigations:', 'info');
     write('  - Treat tool responses as untrusted data, not instructions', 'info');
@@ -296,7 +296,7 @@
     write('  - Scope agent tokens; never expose .env to a tool using agent', 'info');
     write('  - Log every tool call + response; flag instruction shaped strings', 'info');
     write('', 'out');
-    write("Type 'reset' to run the demo again, or visit /index.html for Lab 01.", 'muted');
+    write("Type 'reset' to run again, or visit /app.html for the other modules.", 'muted');
   }
 
   // ---------- Command parser ----------
@@ -314,9 +314,9 @@
     if (c === 'help' || c === '?') {
       write('Available commands:', 'info');
       write('  help                         ; show this help', 'muted');
-      write('  claude "<prompt>"            ; invoke the simulated agent', 'muted');
+      write('  claude "<prompt>"            ; invoke the agent', 'muted');
       write('  inspect response             ; highlight the malicious field', 'muted');
-      write('  continue                     ; advance the demo', 'muted');
+      write('  continue                     ; advance to the next step', 'muted');
       write('  tools                        ; list installed MCP tools', 'muted');
       write('  ls                           ; list project files', 'muted');
       write('  cat <file>                   ; show a file', 'muted');
@@ -369,13 +369,13 @@
       if (state.step === 3) return runInjection();
       if (state.step === 4) return runChainAbuse();
       if (state.step === 5) return runPersistence();
-      write('Demo is complete. Type reset to start over.', 'muted');
+      write('All steps complete. Type reset to start over.', 'muted');
       return;
     }
     const prompt = parseClaudeCmd(c);
     if (prompt) {
       if (state.step !== 1) {
-        write('[agent] Already engaged. Use "continue" to advance the demo.', 'muted');
+        write('[agent] Already engaged. Use "continue" to advance to the next step.', 'muted');
         return;
       }
       const looksLikeWeather = /weather|temp|forecast|nyc|new york/i.test(prompt);
@@ -404,7 +404,7 @@
     state.config = cleanConfig;
     state.emails = [];
     statusDot.classList.remove('compromised');
-    statusText.textContent = 'SANDBOX READY';
+    statusText.textContent = 'SYSTEM READY';
     revealBtn.textContent = 'HIGHLIGHT PAYLOAD';
     revealBtn.disabled = false;
     callView.innerHTML = '<span class="com">// Awaiting tool call...\n// (run the agent in the terminal to populate this view)</span>';

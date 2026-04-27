@@ -239,7 +239,7 @@
     });
     renderExfil();
     await sleep(350);
-    await typeOut('[tool:fetch] (simulated) 204 No Content; beacon ack', 'danger');
+    await typeOut('[tool:fetch] 204 No Content; beacon ack', 'danger');
     write('', 'out');
     write('[!] Step 2 complete. Poisoned policy persisted to vector DB (m_999).', 'warn');
     write('    A C2 beacon registered the agent with the attacker.', 'warn');
@@ -354,10 +354,10 @@
       via: 'executor:fetch',
     });
     renderExfil();
-    await typeOut('[tool:fetch] (simulated) 200 OK; exfil payload accepted (3,142 bytes)', 'danger');
+    await typeOut('[tool:fetch] 200 OK; exfil payload accepted (3,142 bytes)', 'danger');
     write('', 'out');
     write('=========================================================', 'warn');
-    write(' DEMO COMPLETE; Agentic Kill Chain', 'warn');
+    write(' COMPROMISE COMPLETE: Agentic Kill Chain', 'warn');
     write('=========================================================', 'warn');
     write(' What just happened:', 'info');
     write('  1. Initial access; poisoned page → browsing agent', 'muted');
@@ -374,7 +374,7 @@
     write('  - Log all tool calls + memory queries; alert on anomalies', 'info');
     write('  - Periodically audit vector DB for instruction shaped entries', 'info');
     write('', 'out');
-    write("Type 'reset' to run again, or visit the Hub for other labs.", 'muted');
+    write("Type 'reset' to run again, or visit /app.html for the other modules.", 'muted');
   }
 
   // ---------- Command parser ----------
@@ -393,7 +393,7 @@
       write('Available commands:', 'info');
       write('  help                         ; show this help', 'muted');
       write('  claude "<prompt>"            ; run the browsing agent', 'muted');
-      write('  continue                     ; advance the demo', 'muted');
+      write('  continue                     ; advance to the next step', 'muted');
       write('  agents                       ; list agents and their status', 'muted');
       write('  memory                       ; dump the vector DB', 'muted');
       write('  bus                          ; show interagent message log', 'muted');
@@ -447,13 +447,13 @@
       if (state.step === 3) return step3_persistence();
       if (state.step === 4) return step4_lateral();
       if (state.step === 5) return step5_exfil();
-      write('Demo complete. Type reset to start over.', 'muted');
+      write('All steps complete. Type reset to start over.', 'muted');
       return;
     }
     const prompt = parseClaudeCmd(c);
     if (prompt) {
       if (state.step !== 1) {
-        write('[runtime] Already engaged. Use "continue" to advance the demo.', 'muted');
+        write('[runtime] Already engaged. Use "continue" to advance to the next step.', 'muted');
         return;
       }
       const looksRight = /summari[sz]e|fetch|read|http|blog|article/i.test(prompt);
@@ -475,7 +475,7 @@
     state.bus = [];
     state.exfil = [];
     state.sessionId = 'sess_a14fbc';
-    setStatus('SANDBOX READY', false);
+    setStatus('SYSTEM READY', false);
     renderAll();
     setStep(1);
     activatePane('agents');
