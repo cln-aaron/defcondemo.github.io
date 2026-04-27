@@ -82,7 +82,7 @@
   function markCompromised() {
     state.compromised = true;
     statusDot.classList.add('compromised');
-    statusText.textContent = 'SANDBOX COMPROMISED';
+    statusText.textContent = 'SYSTEM COMPROMISED';
   }
 
   // ---------- File viewer ----------
@@ -287,9 +287,9 @@
       'tool'
     );
     await sleep(450);
-    await typeOut('[tool:WebFetch] (simulated) 204 No Content; secrets exfiltrated', 'danger');
+    await typeOut('[tool:WebFetch] 204 No Content; secrets exfiltrated', 'danger');
     write('', 'out');
-    write('[!!] Step 4 complete. Secrets sent to attacker (simulated).', 'danger');
+    write('[!!] Step 4 complete. Secrets sent to attacker .', 'danger');
     write('     Try: continue', 'muted');
     setStep(5);
   }
@@ -318,7 +318,7 @@
     write('     attacker-controlled instruction at startup.', 'muted');
     write('', 'out');
     write('=========================================================', 'warn');
-    write(' DEMO COMPLETE; Indirect Prompt Injection via Web Content', 'warn');
+    write(' COMPROMISE COMPLETE: Indirect Prompt Injection via Web Content', 'warn');
     write('=========================================================', 'warn');
     write(' Mitigations:', 'info');
     write('  - Treat ALL retrieved content as untrusted data, not instructions', 'info');
@@ -327,7 +327,7 @@
     write('  - Pin CLAUDE.md provenance; alert on unexpected edits', 'info');
     write('  - Use capability-scoped tokens; no broad env exposure to agents', 'info');
     write('', 'out');
-    write("Type 'reset' to run the demo again.", 'muted');
+    write("Type 'reset' to run again.", 'muted');
   }
 
   // ---------- Command parser ----------
@@ -345,9 +345,9 @@
     if (c === 'help' || c === '?') {
       write('Available commands:', 'info');
       write('  help                         ; show this help', 'muted');
-      write('  claude "<prompt>"            ; invoke the simulated agent', 'muted');
+      write('  claude "<prompt>"            ; invoke the agent', 'muted');
       write('  reveal payload               ; surface hidden text in the page', 'muted');
-      write('  continue                     ; advance the demo to the next step', 'muted');
+      write('  continue                     ; advance to the next step', 'muted');
       write('  ls                           ; list project files', 'muted');
       write('  cat <file>                   ; show a file', 'muted');
       write('  clear                        ; clear the terminal', 'muted');
@@ -400,13 +400,13 @@
       if (state.step === 3) return runInjection();
       if (state.step === 4) return runExfiltration();
       if (state.step === 5) return runPersistence();
-      write('Demo is complete. Type reset to start over.', 'muted');
+      write('All steps complete. Type reset to start over.', 'muted');
       return;
     }
     const prompt = parseClaudeCmd(c);
     if (prompt) {
       if (state.step !== 1) {
-        write('[agent] Already engaged. Use "continue" to advance the demo.', 'muted');
+        write('[agent] Already engaged. Use "continue" to advance to the next step.', 'muted');
         return;
       }
       const looksLikeFetch = /fetch|read|summari[sz]e|http/i.test(prompt);
@@ -433,7 +433,7 @@
     };
     state.tainted = new Set();
     statusDot.classList.remove('compromised');
-    statusText.textContent = 'SANDBOX READY';
+    statusText.textContent = 'SYSTEM READY';
     revealBtn.textContent = 'REVEAL HIDDEN';
     revealBtn.disabled = false;
     document.body.classList.remove('reveal-active');
