@@ -169,6 +169,30 @@ body {
   padding: 0.05rem 0.3rem;
   border-radius: 3px;
 }
+.say {
+  margin: 0.45rem 0 0.4rem;
+  padding: 0.45rem 0.6rem 0.45rem 0.7rem;
+  border-left: 2px solid rgba(0,255,156,0.35);
+  background: linear-gradient(90deg, rgba(0,255,156,0.05), transparent 70%);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: #b6c2cf;
+  font-style: italic;
+  border-radius: 0 3px 3px 0;
+}
+.say code {
+  background: rgba(255,255,255,0.06);
+  padding: 0.02rem 0.3rem;
+  border-radius: 3px;
+  font-size: 0.74rem;
+  color: var(--accent);
+  font-style: normal;
+}
+.say strong {
+  color: var(--accent);
+  font-style: normal;
+  letter-spacing: 0.02em;
+}
 .legend {
   margin-top: 1.2rem;
   padding-top: 1rem;

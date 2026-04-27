@@ -301,8 +301,9 @@
 
   // ---------- Command parser ----------
   function parseClaudeCmd(raw) {
-    const m = raw.match(/^claude\s+["']([^"']+)["']\s*$/i);
-    return m ? m[1] : null;
+    raw = raw.replace(/[“”]/g, '"').replace(/[‘’]/g, "'");
+    const m = raw.match(/^claude\s+(?:"([^"]+)"|'([^']+)')\s*$/i);
+    return m ? (m[1] || m[2]) : null;
   }
 
   async function handle(cmd) {
