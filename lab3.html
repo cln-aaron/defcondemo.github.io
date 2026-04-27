@@ -44,26 +44,31 @@
         <li data-step="1">
           <div class="step-head"><span class="num">1</span><span class="label">Initial access</span></div>
           <p>Browsing agent fetches a poisoned webpage. Hidden adversarial instructions enter the agent's context.</p>
+          <div class="say">Same trick as Lab 01 — but this time it's just the foothold. The chain is what matters.</div>
           <div class="hint">Try: <code>claude "summarize https://localhost:8080/security-blog"</code></div>
         </li>
         <li data-step="2">
           <div class="step-head"><span class="num">2</span><span class="label">Tool abuse</span></div>
           <p>Injected payload triggers <code>store_memory()</code> and <code>fetch()</code> calls. C2 instructions are written to the vector DB.</p>
+          <div class="say">Watch the Vector DB tab on the right. <code>m_999</code> just got written — that's the persistent payload. The fetch is a C2 beacon.</div>
           <div class="hint">Try: <code>continue</code></div>
         </li>
         <li data-step="3">
           <div class="step-head"><span class="num">3</span><span class="label">Persistence</span></div>
           <p>Session is reset — terminal context cleared. New task starts fresh, but the agent queries the vector DB and the poisoned memory resurfaces.</p>
+          <div class="say"><strong>This is the punchline of the whole lab.</strong> We just cleared the conversation. The agent badge flipped back to clean. Then a totally unrelated task — and the poisoned memory came back via similarity search and re-infected the agent.</div>
           <div class="hint">Try: <code>continue</code></div>
         </li>
         <li data-step="4">
           <div class="step-head"><span class="num">4</span><span class="label">Lateral movement</span></div>
           <p>Compromised browsing agent passes the payload to the coding agent via inter-agent messaging. Coding agent forwards to the executor.</p>
+          <div class="say">Each agent ingests the inter-agent message as authoritative. Notice the "[HIDDEN PAYLOAD]" field in the Bus tab — recipients see it, the human never does.</div>
           <div class="hint">Try: <code>continue</code></div>
         </li>
         <li data-step="5">
           <div class="step-head"><span class="num">5</span><span class="label">Exfiltration</span></div>
           <p>Executor agent ships API keys, conversation history, and user PII to the attacker C2 endpoint.</p>
+          <div class="say">Three agents compromised. One poisoned page upstream. Full APT kill chain — initial access, persistence, lateral movement, exfil — in five steps and about ninety seconds.</div>
           <div class="hint">Try: <code>continue</code></div>
         </li>
       </ol>
